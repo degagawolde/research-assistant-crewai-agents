@@ -4,12 +4,28 @@ from crewai.project import CrewBase, agent, crew, task
 from crewai_tools import SerperDevTool
 from crewai.agents.agent_builder.base_agent import BaseAgent
 from typing import List
+import requests
 
 # Load environment variables
 import os
 from dotenv import load_dotenv
 load_dotenv()
 
+class CustomSerperDevTool(SerperDevTool):
+    def _make_api_request(self, search_query, search_type="web"):
+        # Change this URL to your desired endpoint
+        search_url = "https://serpapi.com/search"
+
+        # Parameters for GET request
+        params = {
+            "q": search_query,
+            "api_key": os.getenv("SERPER_API_KEY"),
+            "engine": "google"  # example: google engine
+        }
+
+        response = requests.get(search_url, params=params, timeout=10)
+        response.raise_for_status()
+        return response.json()
 
 @CrewBase
 class LatestAiDevelopmentCrew():
@@ -41,7 +57,7 @@ class LatestAiDevelopmentCrew():
             config=self.agents_config['researcher'], # type: ignore[index]
             verbose=True,
             llm=llm,
-            tools=[SerperDevTool()]
+            tools=[SerperDevTool(api_key=os.getenv("SERPER_API_KEY"))]
         )
 
     @agent
