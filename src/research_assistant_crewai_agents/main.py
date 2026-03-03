@@ -8,6 +8,6 @@ def run():
   Run the crew.
   """
   inputs = {
-    'topic': 'AI Agents'
+    'topic': 'The difference between agentic ai architecture and agentic ai design pattern'
   }
   LatestAiDevelopmentCrew().crew().kickoff(inputs=inputs)
