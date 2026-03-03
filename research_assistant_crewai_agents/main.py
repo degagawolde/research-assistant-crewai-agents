@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # src/latest_ai_development/main.py
 import sys
-from tailor_my_cv.crew import LatestAiDevelopmentCrew
+from research_assistant_crewai_agents.crew import LatestAiDevelopmentCrew
 
 def run():
   """
